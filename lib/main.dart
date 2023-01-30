@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_list_db/screens/add_task.dart';
+import 'package:todo_list_db/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,38 +20,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Store a Data'),
-          ),
-          body: Column(
-            children: [
-              TextField(
-                controller: _controller,
-                decoration: const InputDecoration(
-                  hintText: 'Enter a some text',
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    final prefs = await SharedPreferences.getInstance();
-                    final counter = prefs.getInt('counter') ?? 0;
-
-                    print(counter.runtimeType);
-                  },
-                  child: Text('Get Data')),
-            ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.setInt('counter', int.parse(_controller.text));
-            },
-            child: const Icon(Icons.add),
-          )),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => OpenPage(),
+        '/all': (context) => AddTask(),
+      },
     );
   }
 }
